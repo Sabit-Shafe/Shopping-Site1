@@ -1,0 +1,44 @@
+{
+  "shirts": [
+    {
+      "id": "1",
+      "title": "Blue t-Shirt",
+      "brand": "Gucchi",
+      "price": "70",
+      "description": "mens short sleeve t-shirt",
+      "image_url": "https://img.freepik.com/free-vector/flat-church-volunteer-t-shirt_742173-10612.jpg?size=626&ext=jpg&ga=GA1.1.807219352.1716704123&semt=ais_user"
+    },
+    {
+      "id": "2",
+      "title": "Green t-Shirt",
+      "brand": "Dior",
+      "price": 60,
+      "description": "mens short sleeve t-shirt",
+      "image_url": "https://img.freepik.com/free-psd/mens-tri-blend-crew-tee-mockup-04_126278-132.jpg?size=626&ext=jpg&ga=GA1.1.807219352.1716704123&semt=ais_user"
+    },
+    {
+      "id": "3",
+      "title": "Baby Pink t-Shirt",
+      "brand": "Armani",
+      "price": 75,
+      "description": "mens short sleeve t-shirt",
+      "image_url": "https://img.freepik.com/free-psd/mens-short-sleeve-t-shirt-mockups-03_126278-124.jpg?size=626&ext=jpg&ga=GA1.1.807219352.1716704123&semt=ais_user"
+    },
+    {
+      "id": "4",
+      "title": "Crew tri Color t-Shirt",
+      "brand": "D&G",
+      "price": 160,
+      "description": "mens short sleeve t-shirt",
+      "image_url": "https://img.freepik.com/free-psd/mens-tri-blend-crew-tee-mockup-05_126278-133.jpg?size=626&ext=jpg&ga=GA1.1.807219352.1716704123&semt=ais_user"
+    },
+    {
+      "id": "5",
+      "title": "Blue t-Shirt",
+      "brand": "Hermes",
+      "price": 55,
+      "description": "mens short sleeve t-shirt",
+      "image_url": "https://img.freepik.com/premium-vector/simple-black-t-shirt-design_1172241-1668.jpg?size=626&ext=jpg&ga=GA1.1.807219352.1716704123&semt=ais_user"
+    }
+  ]
+}
