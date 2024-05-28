@@ -1,30 +1,51 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
+import { toast, ToastContainer } from 'react-toastify';
 
 // eslint-disable-next-line react/prop-types
-const SingleProductCardDashboard = ({ shoe, onDelete }) => {
-  const { id, title, brand, price, description, image_url } = shoe;
+const SingleProductCardDashboard = ({ shirt, }) => {
+  const { id, title, brand, description, image_url, price } = shirt;
 
   const handleDelete = async () => {
-    await fetch(`http://localhost:3000/shirts/${id}`, {
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        onDelete(id);
+    const userConfirmed = window.confirm(
+      'Are you sure you want to delete this product???'
+    );
+    if (!userConfirmed) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:3000/shirts/${id}`, {
+        method: 'DELETE',
       });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        handleDelete(id);
+        toast.success('Product deleted successfully!');
+      } else {
+        console.error('Failed to delete product');
+        toast.error('Failed to delete product.');
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+      toast.error('An error occurred while deleting the product.');
+    }
   };
+
+
 
   return (
     <div className="card w-96 bg-lime-200 shadow-xl ">
+      <ToastContainer/>
       <figure>
         <img className ="" src={image_url} alt="Shoes" />
       </figure>
       <div className="card-body">
         <h2 className="card-title">{title}</h2>
-        <h3 className="text-xl font-semibold">{brand}</h3>
-        <h3 className="text-xl font-semibold">{price}<span> $</span></h3>
+        <h3 className="text-xl font-semibold">Brand: {brand}</h3>
+        <h3 className="text-xl font-semibold">price: {price}<span> $</span></h3>
         <p>{description}</p>
         <div className="card-actions justify-end">
           <button className="btn bg-indigo-500 text-white rounded-full">

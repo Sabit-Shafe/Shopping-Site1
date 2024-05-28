@@ -1,6 +1,7 @@
-// import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import { toast } from "react-toastify";
+
 
 const AddProducts = () => {
     const handleSubmit = async (e) => {
@@ -14,33 +15,36 @@ const AddProducts = () => {
       const description = form.description.value;
       const image_url = form.image_url.value;
   
-      const data = { id, title, brand, price, description, image_url };
-  
-      await fetch("http://localhost:3000/shirts", {
-        method: "POST",
+      const insertData = { id, title, brand, price, description, image_url };
+      const userConfirmed = window.confirm('Do you want to add this product?');
+    if (!userConfirmed) {
+      return;
+    }
+    try {
+      const response = await fetch(`http://localhost:3000/shirts`, {
+        method: 'POST',
         headers: {
-          "Content-type": "application/json",
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
-      })
-        .then((res) => res.json())
-        .then(data => {
-          console.log(data);
-          if (data){
-            toast.success('Product Added Successfully')
-            form.reset();
-          }
-          // if(data.data.id)
-          //   toast.success('product added successfully')
-          else{
-            toast.error('Failed to add the Product');
-        }
-    
-        });
-    };
+        body: JSON.stringify(insertData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        toast.success('Product added successfully!');
+        form.reset();
+      } else {
+        toast.error('Failed to add product.');
+      }
+    } catch (error) {
+      toast.error('An error occurred while adding the product.');
+    }
+  };
   
     return (
       <div className="bg-rose-50">
+        <ToastContainer />
         <h1 className="text-5xl font-bold text-center">Add a Product</h1>
   
         <div className="my-16">
@@ -61,6 +65,7 @@ const AddProducts = () => {
                 placeholder="Brand"
               />
             </div>
+        
             <div className="mt-2">
               <input
                 className="bg-gray-200 p-4 w-full border border-black rounded-lg"

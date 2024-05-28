@@ -1,42 +1,58 @@
-import { useState } from "react";
+
 import { useLoaderData } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const EditProducts = () => {
   const shirt = useLoaderData();
-
-  const [title, setTitle] = useState(shirt.title);
-  const [price, setPrice] = useState(shirt.price);
-  const [brand, setBrand] = useState(shirt.brand);
-  const [id, setId] = useState(shirt.id);
-  const [description, setDescription] = useState(shirt.description);
-  const [image_url, setImageURL] = useState(shirt.image_url);
+  const { id, title, brand, price, description, image_url } = shirt;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const form = e.target;
-    const id = form.id.value;
-    const title = form.title.value;
     const brand = form.brand.value;
-    const price = form.price.value;
-    const description = form.description.value;
+    const title = form.title.value;
+    const description = (form.description.value);
+    const price = Number(form.price.value);
     const image_url = form.image_url.value;
+    const id = form.id.value;
 
-    const data = { id, title, brand, price, description, image_url };
 
-    await fetch(`http://localhost:3000/shoes/${shirt.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+
+    
+
+    const inputData = { id, brand, title, image_url, description, price };
+    
+
+    const userConfirmed = window.confirm('Do you want to update this product?');
+    if (!userConfirmed) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:3000/shirts/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(inputData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        toast.success('Product updated successfully!');
+        form.reset();
+      } else {
+        toast.error('Failed to update product.');
+      }
+    } catch (error) {
+      toast.error('An error occurred while updating the product.');
+    }
   };
 
   return (
     <div className="bg-rose-50">
+      <ToastContainer />
       <h1 className="text-5xl font-bold text-center">Edit Product</h1>
 
       <div className="my-16">
@@ -47,8 +63,8 @@ const EditProducts = () => {
               type="text"
               name="title"
               placeholder="Title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              defaultValue={title}
+              
             />
           </div>
           <div className="mt-2">
@@ -57,18 +73,19 @@ const EditProducts = () => {
               type="text"
               name="brand"
               placeholder="Brand"
-              value={brand}
-              onChange={(e) => setBrand(e.target.value)}
+              defaultValue={brand}
+              
             />
           </div>
+         
           <div className="mt-2">
             <input
               className="bg-gray-100 p-4 w-full border border-black rounded-lg"
               type="number"
               name="price"
               placeholder="Price"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
+              defaultValue={price}
+              
             />
           </div>
           <div className="mt-2">
@@ -77,8 +94,8 @@ const EditProducts = () => {
               type="text"
               name="description"
               placeholder="Description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              defaultValue={description}
+              
             />
           </div>
           <div className="mt-2">
@@ -87,8 +104,8 @@ const EditProducts = () => {
               type="text"
               name="image_url"
               placeholder="Image URL"
-              value={image_url}
-              onChange={(e) => setImageURL(e.target.value)}
+              defaultValue={image_url}
+              
             />
           </div>
           <div className="mt-2">
@@ -97,15 +114,15 @@ const EditProducts = () => {
               type="text"
               name="id"
               placeholder="ID"
-              value={id}
-              onChange={(e) => setId(e.target.value)}
+              defaultValue={id}
+              
             />
           </div>
           <div className="mt-2 flex justify-center items-center">
             <input
               className="btn mt-2  bg-purple-500 text-white p-4"
               type="submit"
-              value="Add product"
+              defaultValue="Edit Product"
             />
           </div>
         </form>

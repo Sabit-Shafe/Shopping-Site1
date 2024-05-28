@@ -13,6 +13,9 @@ const AllProducts = () => {
   const handleDeleteProduct = (id) => {
     setProducts(products.filter((product) => product.id !== id));
   };
+  // const handleupdate = (id) => {
+  //   setProducts(products.filter((product) => product.id !== id));
+  // };
 
   return (
     <div className="bg-rose-50">
@@ -21,8 +24,9 @@ const AllProducts = () => {
         {products.map((shirt) => (
           <SingleProductCardDashboard
             key={shirt.id}
-            shoe={shirt}
+            shirt={shirt}
             onDelete={handleDeleteProduct}
+            
           />
         ))}
       </div>
